@@ -45,7 +45,7 @@ def main():
     X_train,X_test,y_train,y_test=train_test_split(X,y,random_state=0,test_size=10000)
 
     #模型定义
-    model=MLPClassifier(hidden_layer_sizes=(100,100,40,40,),max_iter=1,solver='sgd',batch_size=args.batch_size,learning_rate='invscaling',learning_rate_init=args.lr,power_t=args.gamma,random_state=args.seed,warm_start=True)
+    model=MLPClassifier(hidden_layer_sizes=(1000,100,40,20,),max_iter=1,solver='sgd',batch_size=args.batch_size,learning_rate='invscaling',learning_rate_init=args.lr,power_t=args.gamma,random_state=args.seed,warm_start=True)
 
     #训练
     start=time.time()
