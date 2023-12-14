@@ -30,7 +30,7 @@ def main():
     # 测试参数
     parser=argparse.ArgumentParser(description="MNIST MLP分类器")
     parser.add_argument('--batch-size',type=int,default=64,metavar='N',help='输入批次大小，默认为64')
-    parser.add_argument('--max-iter',type=int,default=14,metavar='N',help='最大训练轮数，默认为14')
+    parser.add_argument('--epochs',type=int,default=14,metavar='N',help='训练轮数，默认为14')
     parser.add_argument('--lr',type=float,default=0.01,metavar='LR',help='学习率，默认为0.01')
     parser.add_argument('--gamma',type=float,default=0,metavar='M',help='学习率衰减率，默认为0')
     parser.add_argument('--seed',type=int,default=1,metavar='S',help='随机种子，默认为1')
@@ -49,7 +49,7 @@ def main():
 
     #训练
     start=time.time()
-    for epoch in range(1,args.max_iter+1):
+    for epoch in range(1,args.epochs+1):
         train(model,X_train,y_train)
         test(model,X_test,y_test)
     end=time.time()
