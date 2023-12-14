@@ -7,6 +7,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import log_loss
 from joblib import dump,load
+import time
 
 # 定义训练函数
 def train(model,X_train,y_train):
@@ -36,18 +37,25 @@ def main():
     parser.add_argument('--save-model',action='store_true',default=False,help='是否保存模型，默认为False')
     args=parser.parse_args()
 
+    #数据集
     X,y=fetch_openml("mnist_784",version=1,return_X_y=True,as_frame=False,parser="pandas")
     # transform
     X=(X/255.0)
     # 划分测试与训练集
     X_train,X_test,y_train,y_test=train_test_split(X,y,random_state=0,test_size=10000)
 
+    #模型定义
     model=MLPClassifier(hidden_layer_sizes=(40,),max_iter=1,solver='sgd',batch_size=args.batch_size,learning_rate='invscaling',learning_rate_init=args.lr,power_t=args.gamma,random_state=args.seed,warm_start=True)
 
+    #训练
+    start=time.time()
     for epoch in range(1,args.max_iter+1):
         train(model,X_train,y_train)
         test(model,X_test,y_test)
+    end=time.time()
+    print('训练时间：{:.2f}s'.format(end-start))
 
+    #保存模型
     if args.save_model:
         dump(model,'mlp-mnist.joblib')
 
